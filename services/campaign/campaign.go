@@ -14,14 +14,14 @@ type Client struct {
 // NewClient returns a new client configured to communicate on a server with the
 // given hostname and port and to send an Authorization Header with the value of
 // token
-// func NewClient(hostname string, token string) *Client {
+func NewClient(hostname string, token string) *Client {
 
-// 	return &Client{
-// 		NewBase(
-// 			hostname,
-// 			token,
-// 		)}
-// }
+	return &Client{
+		NewBase(
+			hostname,
+			token,
+		)}
+}
 
 // Create creates a new campaign and return the id
 func (c *Client) Create(campaign *Campaign) (*Response, error) {
