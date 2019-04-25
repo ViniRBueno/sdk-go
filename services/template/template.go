@@ -4,11 +4,13 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+
+	common "github.com/ViniRBueno/sdk-go/services/common"
 )
 
 // Client is the client for Tenant Discovery Rest Api
 type Client struct {
-	BaseClient
+	common.BaseClient
 }
 
 // NewClient returns a new client configured to communicate on a server with the
@@ -17,7 +19,7 @@ type Client struct {
 func NewClient(hostname string, token string) *Client {
 
 	return &Client{
-		NewBase(
+		common.NewBase(
 			hostname,
 			token,
 		)}
@@ -33,7 +35,7 @@ func (c *Client) Create(template *Template) (*Response, error) {
 		return nil, err
 	}
 
-	body, err := c.httpRequest(fmt.Sprint("/v2/template"), "POST", buf)
+	body, err := c.HTTPRequest(fmt.Sprint("/v2/template"), "POST", buf)
 
 	response := &Response{}
 	err = json.NewDecoder(body).Decode(template)
@@ -48,7 +50,7 @@ func (c *Client) Create(template *Template) (*Response, error) {
 // Get gets the template by the Id
 func (c *Client) Get(id string) (*Template, error) {
 
-	body, err := c.httpRequest(fmt.Sprintf("/v2/template/%v", id), "GET", bytes.Buffer{})
+	body, err := c.HTTPRequest(fmt.Sprintf("/v2/template/%v", id), "GET", bytes.Buffer{})
 
 	if err != nil {
 		return nil, err
@@ -72,7 +74,7 @@ func (c *Client) Update(id string, template *Template) error {
 	if err != nil {
 		return err
 	}
-	_, err = c.httpRequest(fmt.Sprintf("/v2/template/%v", id), "PUT", buf)
+	_, err = c.HTTPRequest(fmt.Sprintf("/v2/template/%v", id), "PUT", buf)
 
 	if err != nil {
 		return err
@@ -83,7 +85,7 @@ func (c *Client) Update(id string, template *Template) error {
 
 // Delete removes a template
 func (c *Client) Delete(id string) error {
-	_, err := c.httpRequest(fmt.Sprintf("/v2/template/%v", id), "DELETE", bytes.Buffer{})
+	_, err := c.HTTPRequest(fmt.Sprintf("/v2/template/%v", id), "DELETE", bytes.Buffer{})
 
 	if err != nil {
 		return err
