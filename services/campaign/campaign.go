@@ -4,11 +4,13 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+
+	common "github.com/ViniRBueno/sdk-go/services/common"
 )
 
 // Client is the client for Tenant Discovery Rest Api
 type Client struct {
-	BaseClient
+	common.BaseClient
 }
 
 // NewClient returns a new client configured to communicate on a server with the
@@ -17,7 +19,7 @@ type Client struct {
 func NewClient(hostname string, token string) *Client {
 
 	return &Client{
-		NewBase(
+		common.NewBase(
 			hostname,
 			token,
 		)}
@@ -33,7 +35,7 @@ func (c *Client) Create(campaign *Campaign) (*Response, error) {
 		return nil, err
 	}
 
-	body, err := c.httpRequest(fmt.Sprint("/v2/campaigns"), "POST", buf)
+	body, err := c.HTTPRequest(fmt.Sprint("/v2/campaigns"), "POST", buf)
 
 	response := &Response{}
 	err = json.NewDecoder(body).Decode(campaign)
@@ -48,7 +50,7 @@ func (c *Client) Create(campaign *Campaign) (*Response, error) {
 // Get gets the campaign by the Id
 func (c *Client) Get(id string) (*Campaign, error) {
 
-	body, err := c.httpRequest(fmt.Sprintf("/v2/campaigns/%v", id), "GET", bytes.Buffer{})
+	body, err := c.HTTPRequest(fmt.Sprintf("/v2/campaigns/%v", id), "GET", bytes.Buffer{})
 
 	if err != nil {
 		return nil, err
@@ -72,7 +74,7 @@ func (c *Client) Update(id string, campaign *Campaign) error {
 	if err != nil {
 		return err
 	}
-	_, err = c.httpRequest(fmt.Sprintf("/v2/campaigns/%v", id), "PUT", buf)
+	_, err = c.HTTPRequest(fmt.Sprintf("/v2/campaigns/%v", id), "PUT", buf)
 
 	if err != nil {
 		return err
@@ -83,7 +85,7 @@ func (c *Client) Update(id string, campaign *Campaign) error {
 
 // Delete removes a campaign
 func (c *Client) Delete(id string) error {
-	_, err := c.httpRequest(fmt.Sprintf("/v2/campaigns/%v", id), "DELETE", bytes.Buffer{})
+	_, err := c.HTTPRequest(fmt.Sprintf("/v2/campaigns/%v", id), "DELETE", bytes.Buffer{})
 
 	if err != nil {
 		return err
