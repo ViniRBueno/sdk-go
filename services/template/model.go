@@ -10,9 +10,9 @@ type Response struct {
 // Template gets the basic data of a template
 type Template struct {
 	ID                       int64
-	catalogID                int64
-	campaignID               int64
-	body                     string
+	CatalogID                int64
+	CampaignID               int64
+	Body                     string
 	Subject                  string
 	NotificationTypeID       int
 	TemplateTypeID           float32
