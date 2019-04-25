@@ -5,3 +5,7 @@ type TemplateType struct {
 	ID   int64
 	Name string
 }
+
+type TemplateTypesList struct {
+	Collection []TemplateType
+}

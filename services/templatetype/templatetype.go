@@ -26,7 +26,7 @@ func NewClient(hostname string, token string) *Client {
 }
 
 // Get gets all the templatetypes
-func (c *Client) Get() (*TemplateType, error) {
+func (c *Client) Get() (*TemplateTypesList, error) {
 
 	body, err := c.HTTPRequest(fmt.Sprintf("/v1/campaigns/catalogTemplateTypes"), "GET", bytes.Buffer{})
 
@@ -34,11 +34,11 @@ func (c *Client) Get() (*TemplateType, error) {
 		return nil, err
 	}
 
-	templatetype := &TemplateType{}
-	err = json.NewDecoder(body).Decode(templatetype)
+	templatetypes := &TemplateTypesList{}
+	err = json.NewDecoder(body).Decode(templatetypes)
 
 	if err != nil {
 		return nil, err
 	}
-	return templatetype, nil
+	return templatetypes, nil
 }
