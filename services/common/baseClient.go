@@ -24,7 +24,8 @@ func NewBase(hostname string, token string) BaseClient {
 	}
 }
 
-func (c *BaseClient) httpRequest(path, method string, body bytes.Buffer) (closer io.ReadCloser, err error) {
+// HttpRequest manages the http requests with LTM Headers
+func (c *BaseClient) HttpRequest(path, method string, body bytes.Buffer) (closer io.ReadCloser, err error) {
 
 	req, err := http.NewRequest(method, c.requestPath(path), &body)
 
