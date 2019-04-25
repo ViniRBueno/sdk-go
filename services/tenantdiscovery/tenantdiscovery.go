@@ -4,11 +4,13 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+
+	common "github.com/ViniRBueno/sdk-go/services/common"
 )
 
 // TenantClient is the client for Tenant Discovery Rest Api
 type TenantClient struct {
-	BaseClient
+	common.BaseClient
 }
 
 // NewClient returns a new client configured to communicate on a server with the
@@ -17,7 +19,7 @@ type TenantClient struct {
 func NewClient(hostname string, token string) *TenantClient {
 
 	return &TenantClient{
-		NewBase(
+		common.NewBase(
 			hostname,
 			token,
 		)}
@@ -26,7 +28,7 @@ func NewClient(hostname string, token string) *TenantClient {
 // Get gets an tenant configuration for campaign
 func (c *TenantClient) Get(id string) (*Tenant, error) {
 
-	body, err := c.httpRequest(fmt.Sprintf("/%v/.well-known/tenant-configuration", id), "GET", bytes.Buffer{})
+	body, err := c.HTTPRequest(fmt.Sprintf("/%v/.well-known/tenant-configuration", id), "GET", bytes.Buffer{})
 
 	if err != nil {
 		return nil, err
@@ -52,7 +54,7 @@ func (c *TenantClient) Create(tenant *Tenant) error {
 		return err
 	}
 
-	_, err = c.httpRequest(fmt.Sprintf("/tenant-configuration/%v", tenant.ID), "POST", buf)
+	_, err = c.HTTPRequest(fmt.Sprintf("/tenant-configuration/%v", tenant.ID), "POST", buf)
 
 	if err != nil {
 		return err
@@ -70,7 +72,7 @@ func (c *TenantClient) Update(tenant *Tenant) error {
 	if err != nil {
 		return err
 	}
-	_, err = c.httpRequest(fmt.Sprintf("/tenant-configuration/%v/auth", tenant.ID), "PUT", buf)
+	_, err = c.HTTPRequest(fmt.Sprintf("/tenant-configuration/%v/auth", tenant.ID), "PUT", buf)
 
 	if err != nil {
 		return err
@@ -81,7 +83,7 @@ func (c *TenantClient) Update(tenant *Tenant) error {
 // Delete removes an tenant discovery configuration
 func (c *TenantClient) Delete(id string) error {
 
-	_, err := c.httpRequest(fmt.Sprintf("/tenant-configuration/%v", id), "DELETE", bytes.Buffer{})
+	_, err := c.HTTPRequest(fmt.Sprintf("/tenant-configuration/%v", id), "DELETE", bytes.Buffer{})
 
 	if err != nil {
 		return err
