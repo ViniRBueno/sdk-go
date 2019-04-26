@@ -1,11 +1,7 @@
 package template
 
-// TemplateType is the structure of the TemplateType
-type TemplateType struct {
-	ID   int64
-	Name string
-}
-
-type TemplateTypesList struct {
-	Collection []TemplateType
+// TemplateTypesList is the structure of the TemplateType
+type TemplateTypesList []struct {
+	ID   int    `json:"id"`
+	Name string `json:"name"`
 }
