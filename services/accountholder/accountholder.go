@@ -26,9 +26,9 @@ func NewClient(hostname string, token string) *Client {
 }
 
 // Get gets the AccountHolder by the campaignid
-func (c *Client) Get(id string) (*AccountHolder, error) {
+func (c *Client) Get(id string, originid string) (*AccountHolder, error) {
 
-	body, err := c.HTTPRequest(fmt.Sprintf("/v1/campaigns/%v/originAccountHolder", id), "GET", bytes.Buffer{})
+	body, err := c.HTTPRequest(fmt.Sprintf("/v1/campaigns/%v/originAccountHolder/%v", id, originid), "GET", bytes.Buffer{})
 
 	if err != nil {
 		return nil, err

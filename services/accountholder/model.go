@@ -3,7 +3,7 @@ package accountholder
 import "time"
 
 // AccountHolder gets the basic data of an accountholder
-type AccountHolder struct {
+type AccountHolder []struct {
 	ID                           int64
 	ClientID                     int64
 	CampaignID                   int64
